@@ -1,0 +1,16 @@
+name: Vulnerability scan
+
+on: [push, pull_request]
+
+jobs:
+  vulnerabilities-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: debricked/vulnerable-functionality/java/maven@master
+    - uses: debricked/actions/scan@v1
+      env:
+        DEBRICKED_API_URI: ${{ secrets.DEBRICKED_STAGING_URI }}
+        DEBRICKED_TOKEN: ${{ secrets.DEBRICKED_TOKEN }}
+        UPLOAD_ALL_FILES: "true"
